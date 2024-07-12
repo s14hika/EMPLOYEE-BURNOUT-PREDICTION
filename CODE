@@ -1,0 +1,25 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load the new CSV file
+file_path = '/content/sample_submission.csv'
+data = pd.read_csv(file_path)
+
+# Generate descriptive statistics
+descriptive_stats = data['Burn Rate'].describe()
+print("Descriptive Statistics:\n", descriptive_stats)
+
+# Visualize the burn rates
+plt.figure(figsize=(10, 6))
+sns.histplot(data['Burn Rate'], bins=10, kde=True)
+plt.title('Distribution of Burn Rates')
+plt.xlabel('Burn Rate')
+plt.ylabel('Frequency')
+plt.show()
+
+plt.figure(figsize=(10, 6))
+sns.boxplot(x=data['Burn Rate'])
+plt.title('Box Plot of Burn Rates')
+plt.xlabel('Burn Rate')
+plt.show()
