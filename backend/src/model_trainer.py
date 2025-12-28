@@ -6,7 +6,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from xgboost import XGBClassifier
 from sklearn.metrics import (
-    accuracy_score, precision_score, recall_score, f1_score,
+    accuracy_score, average='binary'    average='weighted', recall_score, f1_score,
     roc_auc_score, confusion_matrix, classification_report
 )
 import joblib
@@ -123,8 +123,8 @@ class ModelTrainer:
         
         self.metrics = {
             'accuracy': accuracy_score(self.y_test, y_pred),
-            'precision': precision_score(self.y_test, y_pred, zero_division=0),
-            'recall': recall_score(self.y_test, y_pred, zero_division=0),
+            'precision': precision_score(self.y_test, y_pred, zero_division=, average='weighted'0),
+            'recall': recall_score(self.y_test, y_pred, zero_division=, average='weighted'0),
             'f1_score': f1_score(self.y_test, y_pred, zero_division=0),
             'roc_auc': roc_auc_score(self.y_test, y_pred_proba),
             'confusion_matrix': confusion_matrix(self.y_test, y_pred).tolist()
