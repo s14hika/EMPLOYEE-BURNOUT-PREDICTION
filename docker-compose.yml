@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=production
+      - FLASK_HOST=0.0.0.0
+      - FLASK_PORT=5000
+    volumes:
+      - ./backend/models:/app/models:ro
+      - ./backend/logs:/app/logs
+    depends_on:
+      - postgres
+    networks:
+      - burnout-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8501:8501"
+    environment:
+      - STREAMLIT_SERVER_PORT=8501
+      - BACKEND_URL=http://backend:5000
+    depends_on:
+      - backend
+    networks:
+      - burnout-network
+
+  postgres:
+    image: postgres:15
+    environment:
+      - POSTGRES_USER=burnout_user
+      - POSTGRES_PASSWORD=secure_password_123
+      - POSTGRES_DB=burnout_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - burnout-network
+
+volumes:
+  postgres_data:
+
+networks:
+  burnout-network:
+    driver: bridge
