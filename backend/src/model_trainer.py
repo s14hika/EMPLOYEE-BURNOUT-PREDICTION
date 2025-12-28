@@ -6,8 +6,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from xgboost import XGBClassifier
 from sklearn.metrics import (
-    accuracy_score, average='binary'    average='weighted', recall_score, f1_score,
-    roc_auc_score, confusion_matrix, classification_report
+    accuracy_score, recall_score, f1_score,    roc_auc_score, confusion_matrix, classification_report
 )
 import joblib
 import logging
